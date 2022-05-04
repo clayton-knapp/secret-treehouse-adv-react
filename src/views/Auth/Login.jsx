@@ -39,17 +39,19 @@ export default function Login() {
         onSubmit={handleLogin}
         onChange={handleFormChange}
         className={styles.loginForm}>
-        <label>Email</label>
+        <label htmlFor='email'>Email</label>
         <input
           id="email"
           name="email"
           type="email"
+          value={formState.email}
         />{' '}
-        <label>Password</label>
+        <label htmlFor='password'>Password</label>
         <input
           id="password"
           name="password"
           type="password"
+          value={formState.password}
         />
         <button type="submit" aria-label="Sign In">
           Sign in
