@@ -16,36 +16,29 @@ export default function Login() {
   const { from } = location.state || { from: { pathname: '/' } };
 
   const handleLogin = (event) => {
-    try {
-      event.preventDefault();
-      handleFormChange(event); // how do we use this?
+    event.preventDefault();
 
-      const loginWasSuccessful = auth.login(formState.email, formState.password);
-
-      // set past url with useLocation location object
-      // if location.state.from exists set url to the pathname otherwise set back to home
-      // const url = location.state.from ? location.state.from.pathname : '/';
-      const url = from;
-      // if login successful replace current url with the url we need to re-direct to
-      history.replace(url);
-      
-    } catch (error) {
-      setError('Sign in unsuccessful. Please check your credentials & try again.');
-    }
+    const loginWasSuccessful = auth.login(formState.email, formState.password);
 
     // TODO: If login was unsuccessful, set an error with a message
     // to display to the user that their login failed.
+    !loginWasSuccessful
+      ? setError('Sign in unsuccessful. Please check your credentials & try again.')
     //
     // If login was successful, use the history hook
     // from React Router to replace the current URL with the URL
     // we need to redirect to.
     // See https://v5.reactrouter.com/web/api/history for the appropriate method to use
+      : history.replace(from);
   };
 
   return (
     <>
       <h3>You must log in to view the page at {from.pathname}</h3>
-      <form onSubmit={handleLogin} className={styles.loginForm}>
+      <form
+        onSubmit={handleLogin}
+        onChange={handleFormChange}
+        className={styles.loginForm}>
         <label>Email</label>
         <input
           id="email"
