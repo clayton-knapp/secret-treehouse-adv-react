@@ -16,8 +16,21 @@ export default function Login() {
   const { from } = location.state || { from: { pathname: '/' } };
 
   const handleLogin = (event) => {
-    event.preventDefault();
-    const loginWasSuccessful = auth.login(formState.email, formState.password);
+    
+    try {
+      event.preventDefault();
+      
+      const loginWasSuccessful = auth.login(formState.email, formState.password);
+
+      // set past url with useLocation location object
+      // if location.state.from exists set url to the pathname otherwise set back to home
+      const url = location.state.from ? location.state.from.pathname : '/';
+      // if login successful replace current url with the url we need to re-direct to
+      history.replace(url);
+      
+    } catch (error) {
+      setError(error.message);
+    }
 
     // TODO: If login was unsuccessful, set an error with a message
     // to display to the user that their login failed.
