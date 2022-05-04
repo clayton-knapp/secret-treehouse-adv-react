@@ -18,6 +18,7 @@ export default function Login() {
   const handleLogin = (event) => {
     try {
       event.preventDefault();
+      handleFormChange(event); // how do we use this?
 
       const loginWasSuccessful = auth.login(formState.email, formState.password);
 
@@ -29,7 +30,7 @@ export default function Login() {
       history.replace(url);
       
     } catch (error) {
-      setError(error.message);
+      setError('Sign in unsuccessful. Please check your credentials & try again.');
     }
 
     // TODO: If login was unsuccessful, set an error with a message
